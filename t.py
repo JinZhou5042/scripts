@@ -1,41 +1,51 @@
-import weakref
+import ndcctools.taskvine as vine
+from tqdm import tqdm
+import gc
+import time
+import resource
+import sys
+import cloudpickle
+import numpy as np
+import math
+import numpy
+import matplotlib.pyplot as plt
 
-class Document:
-    def __init__(self, content):
-        self.content = content
-        print(f"Document created with content: {self.content}")
 
-class Printer:
-    def __init__(self):
-        self.documents = {}
+def multiply_random_matrices(size=1000):
+    matrix1 = numpy.random.rand(size, size)
+    matrix2 = numpy.random.rand(size, size)
 
-    def add_document(self, document):
-        # Store a weak reference to the document
-        self.documents[document] = weakref.ref(document)
-        # Attach a finalizer to the document for cleanup
-        weakref.finalize(document, self.cleanup, document)
+    return numpy.dot(matrix1, matrix2)
 
-    def cleanup(self, document):
-        if document in self.documents:
-            print(f"Cleaning up and releasing resources for document: {document.content}")
-            del self.documents[document]
 
-    def print_document(self, document):
-        print(f"Printing: {document.content}")
+def main():
 
-# Create a Printer instance
-printer = Printer()
+    q = vine.Manager(port=9125)
+    q.set_name("test_manager_1")
 
-# Create a Document instance
-doc1 = Document("Hello, World!")
+    libtask = q.create_library_from_functions('test-library', multiply_random_matrices, import_modules=[numpy])
+    q.install_library(libtask)
 
-# Add the document to the printer
-printer.add_document(doc1)
+    tasks = 2
+    for _ in range(0, tasks):
+        s_task = vine.FunctionCall('test-library', 'multiply_random_matrices', 1000)
+        q.submit(s_task)
 
-# Print the document
-printer.print_document(doc1)
+    print("Waiting for results...")
+    pbar = tqdm(total=tasks)
 
-# Delete the document
-del doc1
+    time_start = time.time()
 
-# The finalizer attached to doc1 should automatically clean up resources
+    while not q.empty():
+        t = q.wait(5)
+        if t:
+            t.output
+            pbar.update(1)
+
+    pbar.close()
+
+    print(f"tasks completed: {tasks}, time used: {(time.time() - time_start):.4}s")
+
+
+if __name__ == '__main__':
+    main()

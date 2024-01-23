@@ -31,19 +31,18 @@ def main(log_file_path, output_excel_path):
     # 将数据写入Excel的不同工作表，并为每个表添加标题
     with pd.ExcelWriter(output_excel_path, engine='openpyxl') as writer:
         for record_type, records in data.items():
+            # print(records)
             if records:
                 df = pd.DataFrame(records)
 
                 # 为每个工作表添加标题
-                df.index = df.index + 1  # 调整索引以保持顺序
-                df = df.sort_index()    # 重新排序索引
                 if record_type == 'TASK':
                     df.iloc[:, 3] = pd.to_numeric(df.iloc[:, 3], errors='coerce')
-                df.to_excel(writer, sheet_name=record_type, index=False)
+                df.to_excel(writer, sheet_name=record_type, index=False, header=False)
 
 
 if __name__ == "__main__":
-    base_dir = "/afs/crc.nd.edu/user/j/jzhou24/scripts/vine-run-info/2023-11-15T132639/vine-logs"
+    base_dir = "/afs/crc.nd.edu/user/j/jzhou24/scripts/vine-run-info/most-recent/vine-logs"
     txn_log = path.join(base_dir, "transactions")
     opt_png = path.join(base_dir, "txn.xlsx")
     main(txn_log, opt_png)

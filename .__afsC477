@@ -1,0 +1,11 @@
+bash kill_processes.sh -p 9123
+bash kill_processes.sh -n vine
+
+vine_worker localhost 9123 &> /dev/null &
+
+python test.py
+
+dir="vine-run-info/most-recent/vine-logs"
+python vine_plot_txn_log.py ${dir}/transactions ${dir}/txn.png
+
+python mytools/convert_txn.py 

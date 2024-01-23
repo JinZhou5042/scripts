@@ -315,7 +315,7 @@ class ParseTxn:
 
     def _parse_library(self, time, manager_pid, task_id, event, arg):
         task_id = int(task_id)
-
+        print(f"lib task id = {task_id}")
         if task_id in self.cm.task_last_attempt:
             la = self.cm.task_last_attempt[task_id]
             ca = self.cm.tasks_attempts[task_id][la]

@@ -6,8 +6,8 @@
     "dependencies": [
         "cloudpickle=3.0.0=pyhd8ed1ab_0",
         "numpy=1.26.2=py311h24aa872_0",
-        "pip=23.3.1=pyhd8ed1ab_0",
-        "python=3.11.6=hab00c5b_0_cpython"
+        "pip=23.3.2=pyhd8ed1ab_0",
+        "python=3.11.7=hab00c5b_0_cpython"
     ],
     "name": "base"
 }
