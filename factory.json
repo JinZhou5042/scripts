@@ -1,0 +1,10 @@
+{
+    "manager-name": "test_manager",
+    "max-workers": 8,
+    "min-workers": 8,
+    "workers-per-cycle": 8,
+    "cores": 4,
+    "memory": 8192,
+    "disk": 32768,
+    "timeout": 36000
+}

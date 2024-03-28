@@ -1,0 +1,15 @@
+command = vine_factory -T condor -C factory.json --scratch-dir /scratch365/jzhou24/ --python-env /afs/crc.nd.edu/user/j/jzhou24/taskvine-hep-paper/import_exp/env.tar.gz
+factory launching directory = /afs/crc.nd.edu/user/j/jzhou24/taskvine-hep-paper/import_exp
+factory configuration file = /afs/crc.nd.edu/user/j/jzhou24/taskvine-hep-paper/import_exp/factory.json
+factory manager name = test_manager
+factory content = {
+    "manager-name": "test_manager",
+    "max-workers": 32,
+    "min-workers": 32,
+    "workers-per-cycle": 32,
+    "cores": 24,
+    "memory": 98304,
+    "disk": 98304, 
+    "condor-requirements": "DetectedCpus == 24",
+    "timeout": 36000
+}

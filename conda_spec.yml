@@ -1,0 +1,13 @@
+{
+    "channels": [
+        "bioconda",
+        "conda-forge",
+        "defaults"
+    ],
+    "dependencies": [
+        "cloudpickle=3.0.0=pyhd8ed1ab_0",
+        "pip=23.3.2=pyhd8ed1ab_0",
+        "python=3.11.7=hab00c5b_1_cpython"
+    ],
+    "name": "base"
+}
