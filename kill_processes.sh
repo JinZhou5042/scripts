@@ -1,5 +1,6 @@
 # kill processes with given the name or port
 
+USER_NAME=$(whoami)
 script_filename=$(basename "$0")
 
 while [[ "$#" -gt 0 ]]; do
@@ -11,27 +12,27 @@ while [[ "$#" -gt 0 ]]; do
 				echo pids = ${pids[*]} are being killed ...
 				kill -9 $pids
 			else
-                echo "no processes found"
+                echo "no process found"
             fi
 			shift 2
 			;;
 		-n)
-			pids="$(ps aux | grep jzhou24 | grep "$2" | grep -vE "grep|$script_filename" | tr -s ' ' |  cut -d ' ' -f 2)"
+			pids="$(ps aux | grep $USER_NAME  | grep "$2" | grep -vE "grep|$script_filename" | tr -s ' ' |  cut -d ' ' -f 2)"
             if [[ -n $pids ]]; then
 				echo pids = ${pids[*]} are being killed ...
 				kill -9 $pids
 			else
-                echo "no processes found"
+                echo "no process found"
             fi
 			shift 2
 			;;
 		-afs)
-			pids="$(lsof | grep '__afs' | grep jzhou24 | grep -vE "grep|$script_filename" | tr -s ' ' | cut -d ' ' -f 2)"
+			pids="$(lsof | grep '__afs' | grep $USER_NAME | grep -vE "grep|$script_filename" | tr -s ' ' | cut -d ' ' -f 2)"
 			if [[ -n $pids ]]; then
                 echo pids = ${pids[*]} are being killed ...
                 kill -9 $pids
             else
-                echo "no processes found"
+                echo "no process found"
             fi
 			shift 1
 			;;
